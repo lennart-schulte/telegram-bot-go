@@ -18,7 +18,7 @@ type telegramBot struct {
 }
 
 func NewTelegramBot(apiKey string) *telegramBot {
-	baseUrl := TELEGRAM_API_URL + "bot/" + apiKey
+	baseUrl := TELEGRAM_API_URL + "bot" + apiKey
 	t := telegramBot{
 		baseUrl: baseUrl,
 	}
@@ -67,9 +67,9 @@ func main() {
 	}
 	// this is a bit hacky, maybe at some point I define the interface
 	if getMeInterface.(map[string]interface{})["ok"].(bool) {
-		fmt.Println("Request was ok")
+		fmt.Println("Request was ok", string(getMe))
 	} else {
-		fmt.Println("Request was NOT okay")
+		fmt.Println("Request was NOT okay", string(getMe))
 	}
 
 }
