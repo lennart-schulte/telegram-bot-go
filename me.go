@@ -22,7 +22,7 @@ func (t *telegramBot) GetMe() (*MeInfo, error) {
 		return nil, err
 	}
 
-	if err = CheckGetOk(getMe); err != nil {
+	if err = CheckOk(getMe); err != nil {
 		return nil, err
 	}
 

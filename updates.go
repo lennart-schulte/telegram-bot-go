@@ -39,7 +39,7 @@ func (t *telegramBot) GetUpdates() (*Updates, error) {
 		return nil, err
 	}
 
-	if err = CheckGetOk(updates); err != nil {
+	if err = CheckOk(updates); err != nil {
 		return nil, err
 	}
 
@@ -60,6 +60,7 @@ func (t *telegramBot) HandleUpdates() error {
 	for _, update := range updates.Result {
 		user := update.Message.From.FirstName
 		text := update.Message.Text
+		chatId := update.Message.Chat.Id
 
 		var response string
 		switch text {
@@ -71,6 +72,9 @@ func (t *telegramBot) HandleUpdates() error {
 		}
 
 		fmt.Println(user + ": '" + text + "' , response: '" + response + "'")
+		if err := t.SendMessage(chatId, response); err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	return nil

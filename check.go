@@ -13,7 +13,7 @@ import (
 	Description string `json:"description"`
 }*/
 
-func CheckGetOk(getResponse []byte) error {
+func CheckOk(getResponse []byte) error {
 	// checks the "ok" field in the response
 	var getInterface interface{}
 	err := json.Unmarshal(getResponse, &getInterface)
