@@ -19,12 +19,17 @@ func main() {
 	}
 	apiKey := strings.TrimSpace(string(content))
 
-	// access basic telegram bot information
+	// init bot, check if ok
 	t := NewTelegramBot(apiKey)
 	getMe, err := t.GetMe();
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(getMe.Result.Username)
+	fmt.Println("Init complete " + getMe.Result.Username)
+
+	// react to messages
+	if err = t.HandleUpdates(); err != nil {
+		fmt.Println(err)
+	}
 }
