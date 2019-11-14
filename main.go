@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
+	"os/signal"
 	"strings"
+	"time"
 )
 
 const (
@@ -28,8 +31,20 @@ func main() {
 	}
 	fmt.Println("Init complete " + getMe.Result.Username)
 
-	// react to messages
-	if err = t.HandleUpdates(); err != nil {
-		fmt.Println(err)
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		<-c
+		fmt.Println("Exiting")
+		os.Exit(1)
+	}()
+
+	for {
+		// react to messages
+		if err = t.HandleUpdates(); err != nil {
+			fmt.Println(err)
+		}
+
+		time.Sleep(1 * time.Second)
 	}
 }

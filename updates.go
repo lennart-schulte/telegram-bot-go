@@ -58,20 +58,28 @@ func (t *telegramBot) HandleUpdates() error {
 	}
 
 	for _, update := range updates.Result {
+		updateId := update.UpdateId
 		user := update.Message.From.FirstName
 		text := update.Message.Text
 		chatId := update.Message.Chat.Id
+
+		if updateId <= t.updateId {
+			// fmt.Println("Skipping", updateId)
+			continue
+		} else {
+			t.updateId = updateId
+		}
 
 		var response string
 		switch text {
 		case "/ping":
 			response = "Pong!"
 		default:
-			fmt.Println(user + ": '" + text + "' , no response") 
+			fmt.Println(updateId, user + ": '" + text + "' , no response") 
 			continue
 		}
 
-		fmt.Println(user + ": '" + text + "' , response: '" + response + "'")
+		fmt.Println(updateId, user + ": '" + text + "' , response: '" + response + "'")
 		if err := t.SendMessage(chatId, response); err != nil {
 			fmt.Println(err)
 		}

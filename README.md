@@ -1,7 +1,8 @@
 Basic Telegram bot in Golang
 - give you bot's API key in file APIKEY
-- checks if getMe succeeds based on the "ok" value in the response
+- keeps checking messages and responds to /ping
+- does not persist status yet
 
 ```
-go run bot.go
+go run *.go
 ```
